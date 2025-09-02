@@ -1,0 +1,52 @@
+import time
+import random
+
+def vacuum_cleaner():
+    print("🤖 Welcome to SmartVac 2.0 - Intelligent Vacuum Cleaner\n")
+
+    # Get user inputs
+    room_size = input("Enter the room size (small / medium / large): ").lower()
+    dust_quantity = input("How much dust is there? (less / medium / large): ").lower()
+    dock_option = input("Should the vacuum dock itself after cleaning? (yes / no): ").lower()
+
+    # Cleaning steps based on dust and size
+    steps = {
+        "small": 3,
+        "medium": 5,
+        "large": 7
+    }
+    dust_factor = {
+        "less": 1,
+        "medium": 2,
+        "large": 3
+    }
+
+    cleaning_steps = steps.get(room_size, 4) * dust_factor.get(dust_quantity, 2)
+
+    print("\n🧹 Starting cleaning process...\n")
+
+    for step in range(1, cleaning_steps + 1):
+        time.sleep(1)
+
+        # Random chance of obstacle
+        if random.randint(1, 10) > 8:
+            print(f"⚠️ Obstacle detected at step {step}! Avoiding...")
+            time.sleep(1)
+            print("✅ Obstacle avoided, resuming cleaning...")
+
+        print(f"Step {step}/{cleaning_steps}: Vacuuming in progress...")
+
+    print("\n✅ Cleaning completed successfully!")
+
+    # Docking decision
+    if dock_option == "yes":
+        print("\n🔋 Returning to docking station...")
+        time.sleep(2)
+        print("✅ Docked successfully.")
+    else:
+        print("\n⏹ Staying in current location. Docking skipped.")
+
+    print("\nThank you for using SmartVac 2.0 🚀")
+
+# Run the program
+vacuum_cleaner()
