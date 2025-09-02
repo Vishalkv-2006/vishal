@@ -1,0 +1,35 @@
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+xx = np.array([15, 30, 45, 60, 75], dtype=float)
+yy = np.array([25, 50, 75, 100, 125], dtype=float)
+
+# Build a simple model: y = m*x + c
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(units=1, input_shape=[1])
+])
+
+# Compile (optimizer + loss)
+model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.01),
+              loss="mse")
+
+# Train
+history = model.fit(xx, yy, epochs=500, verbose=0)
+
+# Get slope (m) and intercept (c)
+weights = model.layers[0].get_weights()
+m, c = weights[0][0][0], weights[1][0]
+
+print("m:", m)
+print("c:", c)
+
+# Prediction for x=6
+p = model.predict([6.0])
+print("x=6, y:", p[0][0])
+
+# Plot
+plt.scatter(xx, yy, color="blue")
+plt.plot(xx, model.predict(xx), color="red")
+plt.s
